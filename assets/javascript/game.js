@@ -190,13 +190,6 @@ function updateScore() {
         };
 };
 
-
-
-
-
-
-
-
 function player1to2() {
   //update the word prompt
    document.querySelector("#enterword").innerHTML = ('<h2>Player 2, enter a word (between 4-10 letter):</h2> <input id="playerWord" class="input" placeholder="word" name="playerWord" type="text" value="" size="10" /><br /> <button onclick="getWord()">BEGIN!</button>');
