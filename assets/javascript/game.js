@@ -26,14 +26,15 @@ function getWord() {
 
     //Sets up game----code that replaces the original user word input with the other player's guess input
     if (player === "Player 1"){
-       document.querySelector("#enterword").innerHTML = ('<div class="panel-heading"><h2 class="panel-title">Player 2, choose a letter to guess the word</h2></div> <div class="row panel-body"> <div class="col-sm-3"><input id="playerGuess" class="input" placeholder="?" name="playerGuess" type="text" value="" maxlength="1" /><br /><button  onclick="guessLetter()">Guess!</button></div><div id="wordbox" class="col-sm-6 col-sm-offset-2"></div></div>'); 
+      document.querySelector("#enterword").innerHTML = ('<div class="panel-heading"><h2 class="panel-title">Player 2, choose a letter to guess the word</h2></div> <div class="row panel-body"> <div class="col-sm-3"><input id="playerGuess" class="input" placeholder="?" name="playerGuess" type="text" value="" maxlength="1" /><br /><button  onclick="guessLetter()">Guess!</button></div><div id="wordbox" class="col-sm-6 col-sm-offset-2"></div></div>'); 
     } else {
-    document.querySelector("#enterword").innerHTML = ('<div class="panel-heading"><h2 class="panel-title">Player 1, choose a letter to guess the word</h2></div> <div class="panel-body"> <input id="playerGuess" class="input" placeholder="?" name="playerGuess" type="text" value="" maxlength="1" /><br /><button  onclick="guessLetter()">Guess!</button></div><div id="wordbox" class="panel-footer"></div>'); 
+      document.querySelector("#enterword").innerHTML = ('<div class="panel-heading"><h2 class="panel-title">Player 1, choose a letter to guess the word</h2></div> <div class="row panel-body"> <div class="col-sm-3"><input id="playerGuess" class="input" placeholder="?" name="playerGuess" type="text" value="" maxlength="1" /><br /><button  onclick="guessLetter()">Guess!</button></div><div id="wordbox" class="col-sm-6 col-sm-offset-2"></div></div>'); 
       };
 
     //assigns ID's to each h4 and puts the correct number of blanks into the html for guessing
     for ( var i = 0, l = word.length; i < l; i++ ) {
-            document.querySelector("#wordbox").innerHTML += ('<div class="blankletter"><h4 id="x' + i +'"></h4></div>'); 
+            document.querySelector("#wordbox").innerHTML += ('<div class="blankletter"><h4 id="x' + i +'"></h4></div>');
+            //creates an array with "0" for each index to represent the letters of the word 
             wordCheck.push("0");
           };
     document.getElementById("hangmanbox").style.display = "block"; 
@@ -56,30 +57,17 @@ function guessLetter() {
        
   } else  {
     //check to see if letter has been guessed
-     letterGuessCheck();
+    letterGuessCheck();
  
-    //writes letters to the Guessed Letters box
-      writeLetterbox();
-
-    //gets the first position of the letter value in the word
-     pos = word.indexOf(guess);
-
     //check to see if the letter is in the word
- 
-    if (word.indexOf(guess) > -1 )  { 
-          console.log(pos);
-          enterLetters(); 
-         } else {
-          document.getElementById('audio').play();
-          hangTheMan();
-         };
+    //isInWord();
 
     //function wordSolved to see if the word is solved and if anyone won and to switch players
-      wordSolved(); 
+    wordSolved(); 
   }; 
 };
 
-//check to see if letter has been guessed
+//check to see if letter has been guessed before
 function letterGuessCheck() {
   if ( lettersGuessed.indexOf(guess) > -1 )  { 
     alert("You have already guessed this letter.");
@@ -87,17 +75,41 @@ function letterGuessCheck() {
       return; 
      } else { 
         lettersGuessed.push(guess);
-        console.log(lettersGuessed);
+        console.log(lettersGuessed); 
+        //writes letters to the Guessed Letters box
+        //writeLetterbox();
+        //check to see if the letter is in the word
+        isInWord();
      };
 };
 
+//check to see if the letter is in the word
+function isInWord() {
+      //gets the first position of the letter value in the word
+     pos = word.indexOf(guess);
+     //check to see if the letter is in the word
+      if (word.indexOf(guess) > -1 )  { 
+          console.log(pos);
+          enterLetters(); 
+         } else {
+          document.getElementById('audio').play();
+          hangTheMan();
+         };
+       };
+
+
 //writes letters to the Guessed Letters box
-function writeLetterbox () {
+function writeLetterboxCorrect () {
   letterCount = lettersGuessed.length -1;
-  document.querySelector("#letters").innerHTML += ('<span class = "margin">'+lettersGuessed[letterCount]+'</span>');
+  document.querySelector("#letters").innerHTML += ('<div class = "marginCorrect">'+lettersGuessed[letterCount]+'</div>');
 };
 
-  //if the letter is in the word, add the letter to the html
+function writeLetterboxIncorrect () {
+  letterCount = lettersGuessed.length -1;
+  document.querySelector("#letters").innerHTML += ('<div class = "marginIncorrect">'+lettersGuessed[letterCount]+'</div>');
+};
+
+  //Check if the letter is in the word, add the letter to the html
   function enterLetters(){
   while (pos !== -1) { 
     var selector = '#x' + pos;
@@ -106,6 +118,7 @@ function writeLetterbox () {
   //checks for the next instance
        pos = word.indexOf(guess, pos + 1);
     };
+   writeLetterboxCorrect(); 
 };
 
 
@@ -115,13 +128,15 @@ function hangTheMan (){
   guessRemain = 10-missedletters;
   if (missedletters < 10) {
     //update the hangman
-    document.querySelector("#hangmanimg").innerHTML = ('<img  src="assets/images/hangman'+missedletters+'.png"></img>')
+    document.querySelector("#hangmanimg").innerHTML += ('<img  src="assets/images/hangman'+missedletters+'.png" style="position:absolute; top:0; left:0; z-index:'+missedletters+'"></img>')
     document.querySelector("#countdown").innerHTML = ('Guesses Remain: '+guessRemain);
   } else {
     alert('You lost!');
-    document.querySelector("#hangmanbox").innerHTML = ('<img src="assets/images/hangman'+missedletters+'.png"></img>')
-    document.querySelector("#countdown").innerHTML = ('Guesses Remain: '+guessRemain);
-  }
+    document.querySelector("#hangmanimg").innerHTML = ('<img src="assets/images/hangman'+missedletters+'.png"></img>');
+    document.querySelector("#countdown").innerHTML = ('<input type="button" class="btn btn-default btn-sm" id="buttonlost" value="You Lost! (Click to continue.)" onClick="playerSwitch()"></input>');
+  
+  };
+  writeLetterboxIncorrect();
 };
 
 
@@ -137,26 +152,32 @@ function wordSolved(){
     if (player === "Player 1") {
       //If player 2 guessed the word, update Player 2 score
       player2score = player2score + 1;
-      //update the word prompt
-       document.querySelector("#enterword").innerHTML = ('<h2>Player 2, enter a word (between 4-10 letter):</h2> <input id="playerWord" class="input" placeholder="word" name="playerWord" type="text" value="" size="10" /><br /> <button onclick="getWord()">BEGIN!</button>');
+
+
+      //update the word prompt and switch player
+       playerSwitch()
+
       //update Player 2 scoreboard
         document.querySelector("#player2total").innerHTML = ('<h3>'+ player2score+'</h3>');
-      //change player from player 1 to player 2
-        player = "Player 2";
+
       } else if (player === "Player 2") {
       //if player 1 guessed the word, update Player 1 score
         player1score = player1score + 1;
-      //update the word prompt
-        document.querySelector("#enterword").innerHTML = ('<h2>Player 1, enter a word (between 4-10 letter):</h2> <input id="playerWord" class="input" placeholder="word" name="playerWord" type="text" value="" size="10" /><br /> <button onclick="getWord()">BEGIN!</button>');
+
+      //update the word prompt and switch player
+      playerSwitch()
+
       //update Player 1 scoreboard
         document.querySelector("#player1total").innerHTML = ('<h3>'+ player1score+'</h3>');
-      //change player from player 2 to player 1
-        player = "Player 1";
+
       //check to see if one player has reached 5, but only after complete rounds
         if (player1score > 4 && player1score > player2score) {
           alert('Player 1 wins!!!!!');
+          newGame.classList.add("buttonnewgame");
         } else if (player2score > 4 && player2score > player1score) {
           alert('Player 2 wins!!!!');
+          newGame.classList.add("buttonnewgame btn-lg");
+          newGame.classList.remove("btn-xs");
         } else if (player1score > 4 && player1score === player2score) {
           alert('Play another round to break the tie!');
         }
@@ -167,3 +188,40 @@ console.log(wordCheck);
 
 };
     
+function player1to2() {
+  //update the word prompt
+   document.querySelector("#enterword").innerHTML = ('<h2>Player 2, enter a word (between 4-10 letter):</h2> <input id="playerWord" class="input" placeholder="word" name="playerWord" type="text" value="" size="10" /><br /> <button onclick="getWord()">BEGIN!</button>');
+  //change player from player 1 to player 2
+      player = "Player 2";
+      wordCheck = [];
+      lettersGuessed = [];
+      missedletters = 0;
+ };
+
+ function player2to1() {
+  //update the word prompt
+      document.querySelector("#enterword").innerHTML = ('<h2>Player 1, enter a word (between 4-10 letter):</h2> <input id="playerWord" class="input" placeholder="word" name="playerWord" type="text" value="" size="10" /><br /> <button onclick="getWord()">BEGIN!</button>');
+
+  //change player from player 2 to player 1
+        player = "Player 1";
+        wordCheck = [];
+        lettersGuessed = [];
+        missedletters = 0;
+ };    
+
+function playerSwitch() {
+
+  //update the letterbox
+    document.querySelector("#letters").innerHTML = ('');
+
+  //update the hangman
+     document.querySelector("#hangmanbox").innerHTML = ('<div id="hangmanimg" class="panel-body"><img class="img-responsive" src="assets/images/hangman0.png"></img></div><div class="panel-footer"><p id="countdown">Guesses Remain: 10</p></div> ');
+
+  if (player === "Player 1") {
+      //update the word prompt and switch player
+        player1to2(); 
+      } else {
+      //update the word prompt and switch player
+        player2to1();
+      };
+}

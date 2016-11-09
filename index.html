@@ -16,8 +16,10 @@
 <div class="jumbotron">
 <!--Page Header - Title-->
   <div class="page-header panel panel-default">
-      <h1>Let's play Hangman!</h1>
-      <small><input type="button" class="btn btn-default btn-xs" value="New Game" onClick="window.location.reload()"></input></small>
+      <div class="row">
+     <h1>Let's play Hangman!</h1>
+      <input type="button" class="btn btn-default btn-lg" id="newgame" value="New Game" onClick="window.location.reload()"></input>
+      </div>
   </div>
 
 <!-- Player 1 enters a word to begin the game -->
@@ -41,7 +43,7 @@
 
   <!-- Letter box for guessed letters-->
   <div class="row">
-      <div id="letterbox" class="col-md-6 col-sm-12 panel panel-default">
+      <div id="letterbox" class="col-md-6 col-xs-12 panel panel-default">
           <div class="panel-heading">
             <h3 class="panel-title">Letters Guessed:</h3>
           </div>
@@ -49,12 +51,12 @@
           </div>
       </div>
   <!--Hangman Box -->
-      <div id="hangmanbox" class="col-md-6 col-sm-12 panel panel-default">
+      <div id="hangmanbox" class="col-md-6 col-xs-12 panel panel-default">
         <div id="hangmanimg" class="panel-body">
-          <img  src="assets/images/hangman0.png"></img>
+          <img class="img-responsive" src="assets/images/hangman0.png"></img>
         </div>
-        <div id="countdown" class="panel-footer">
-          <p>Guesses Remain: 10</p>
+        <div class="panel-footer">
+          <p id="countdown">Guesses Remain: 10</p>
         </div> 
       </div>
   </div>
@@ -62,7 +64,7 @@
 
     <div class="row" id="scoreboard">
     <!--  <div class="row">-->
-        <div class="col-md-6 col-sm-12 panel panel-default">
+        <div class="col-sm-6 col-sm-12 panel panel-default">
           <div class="panel-heading col-xs-12">
             <h3 class="panel-title">Player 1</h3>
           </div>
@@ -71,7 +73,7 @@
           </div>
         </div>
 
-        <div class="col-md-6 col-sm-12 panel panel-default">
+        <div class="col-sm-6 col-sm-12 panel panel-default">
           <div class="panel-heading col-xs-12">
             <h3 class="panel-title">Player 2</h3>
           </div>
