@@ -8,7 +8,7 @@ var player2score = 0;
 function getWord() {
     //takes word, converts to lowercase, and puts it in a a string
     word = document.getElementById("playerWord").value;
-    
+    word = word.toLowerCase();
 
     if (!word || word.length < 4 ||  word.length > 10 || !(word.match(/^[a-z]+$/))){
 
@@ -16,7 +16,7 @@ function getWord() {
       document.getElementById("playerWord").value = "";
     } else {
 
-    word = word.toLowerCase();
+    
    //creates a blank array to check for if the word is solved;
     wordCheck = [];
     lettersGuessed = [];
@@ -50,6 +50,7 @@ function guessLetter() {
   //gets value of the letter guess
 
   guess = document.getElementById("playerGuess").value;
+  guess = guess.toLowerCase();
   //Check to see if input is valid or blank
  if (!guess || guess.length > 1 || !(guess.match(/[a-z]/i))){
       alert('Please enter a letter.');
@@ -147,12 +148,19 @@ function wordSolved(){
     document.getElementById("playerGuess").value = "";
   } else {
     document.getElementById("playerGuess").value = "";
-    alert('You won!');
 
-    if (player === "Player 1") {
+    //update score and switch player
+    document.querySelector("#countdown").innerHTML = ('<input type="button" class="btn btn-default btn-sm" id="buttonlost" value="You guessed the Word! (Click to Continue)" onClick="updateScore();"></input>');
+   
+  };
+
+console.log(wordCheck);
+};
+    
+function updateScore() {
+  if (player === "Player 1") {
       //If player 2 guessed the word, update Player 2 score
       player2score = player2score + 1;
-
 
       //update the word prompt and switch player
        playerSwitch()
@@ -169,25 +177,26 @@ function wordSolved(){
 
       //update Player 1 scoreboard
         document.querySelector("#player1total").innerHTML = ('<h3>'+ player1score+'</h3>');
-
-      //check to see if one player has reached 5, but only after complete rounds
+      };
+ //check to see if one player has reached 5, but only after complete rounds
         if (player1score > 4 && player1score > player2score) {
-          alert('Player 1 wins!!!!!');
+          document.querySelector("#countdown").innerHTML = ('<input type="button" class="btn btn-default btn-sm" id="buttonlost" value="Player 1 wins!!!!!" onClick="window.location.reload()"></input>');
           newGame.classList.add("buttonnewgame");
         } else if (player2score > 4 && player2score > player1score) {
-          alert('Player 2 wins!!!!');
-          newGame.classList.add("buttonnewgame btn-lg");
-          newGame.classList.remove("btn-xs");
+          document.querySelector("#countdown").innerHTML = ('<input type="button" class="btn btn-default btn-sm" id="buttonlost" value="Player 2 wins!!!!!" onClick="window.location.reload()"></input>')
+          newGame.classList.add("buttonnewgame");
         } else if (player1score > 4 && player1score === player2score) {
           alert('Play another round to break the tie!');
-        }
-      };
-  };
-
-console.log(wordCheck);
-
+        };
 };
-    
+
+
+
+
+
+
+
+
 function player1to2() {
   //update the word prompt
    document.querySelector("#enterword").innerHTML = ('<h2>Player 2, enter a word (between 4-10 letter):</h2> <input id="playerWord" class="input" placeholder="word" name="playerWord" type="text" value="" size="10" /><br /> <button onclick="getWord()">BEGIN!</button>');
