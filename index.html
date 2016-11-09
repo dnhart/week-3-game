@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en-us">
+<head>
+    <meta charset="UTF-8">
+    <title>Hangman</title>
+
+  <!-- Bootstrap Core CSS -->
+    <link href="assets/css/bootstrap.min.css" rel="stylesheet">
+
+  <!-- Custom CSS -->
+    <link href="assets/css/style.css" rel="stylesheet">
+
+</head>
+<body>
+<div class="container container-fluid">
+<div class="jumbotron">
+<!--Page Header - Title-->
+  <div class="page-header panel panel-default">
+      <h1>Let's play Hangman!</h1>
+      <small><input type="button" class="btn btn-default btn-xs" value="New Game" onClick="window.location.reload()"></input></small>
+  </div>
+
+<!-- Player 1 enters a word to begin the game -->
+<div class="row">
+      <div id="enterword" class="col-sm-12 panel panel-default">
+            <div class="panel-heading">
+              <h2 class="panel-title">Player 1, enter a word (between 4-10 letters):</h2>
+            </div>
+            <div class="panel-body">
+
+              <input id="playerWord" class="input" placeholder="word" name="playerWord" type="text" value="" size="10" /><br />
+              <button onclick="getWord()">BEGIN!</button>
+            </div>
+              
+      </div>
+</div>
+      <!--
+     <div class="alert alert-warning" role="alert">Please enter a word between 4 and 10 letters.</div>-->
+
+<!-- Divs currently hidden by default-->
+
+  <!-- Letter box for guessed letters-->
+  <div class="row">
+      <div id="letterbox" class="col-md-6 col-sm-12 panel panel-default">
+          <div class="panel-heading">
+            <h3 class="panel-title">Letters Guessed:</h3>
+          </div>
+          <div id="letters" class="panel-body">
+          </div>
+      </div>
+  <!--Hangman Box -->
+      <div id="hangmanbox" class="col-md-6 col-sm-12 panel panel-default">
+        <div id="hangmanimg" class="panel-body">
+          <img  src="assets/images/hangman0.png"></img>
+        </div>
+        <div id="countdown" class="panel-footer">
+          <p>Guesses Remain: 10</p>
+        </div> 
+      </div>
+  </div>
+  <!--scoreboard -->
+
+    <div class="row" id="scoreboard">
+    <!--  <div class="row">-->
+        <div class="col-md-6 col-sm-12 panel panel-default">
+          <div class="panel-heading col-xs-12">
+            <h3 class="panel-title">Player 1</h3>
+          </div>
+          <div class="panel-body" id="player1total">
+            <h3>0</h3>
+          </div>
+        </div>
+
+        <div class="col-md-6 col-sm-12 panel panel-default">
+          <div class="panel-heading col-xs-12">
+            <h3 class="panel-title">Player 2</h3>
+          </div>
+          <div class="panel-body" id="player2total">
+            <h3>0</h3>
+          </div>
+        </div>
+      <!--</div>end row-->
+    </div> <!--End Scoreboard-->
+
+<!-- End hidden DIVS-->
+
+<audio id="audio" src="assets/sound/wrong.wav" ></audio>
+
+<!--footer
+<nav class="navbar navbar-default navbar-fixed-bottom">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <a class="navbar-brand" href="#">
+        
+      </a>
+    </div>
+  </div>
+</nav>-->
+<!-- end footer-->
+
+
+</div><!--End Jumbotron -->
+
+
+</div><!--End Container -->
+
+<div class="row footer">
+  <p class="copyright text-muted">Copyright &copy; D'Ann Hart 2016. All Rights Reserved</p>
+</div>
+
+
+
+<!-- jQuery -->
+    <script src="assets/javascript/jquery.js"></script>
+<!-- Game JavaScript -->
+    <script src="assets/javascript/game.js"></script>
+<!-- Bootstrap Core JavaScript -->
+    <script src="assets/javascript/bootstrap.min.js"></script>
+
+  </body>
+</html>
