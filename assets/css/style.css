@@ -73,6 +73,7 @@ button {
     color: #7e1ff2;
     background-color: #fff;
     border-color: #542402;
+    white-space: normal;
 }
 #newgame {
     float: right;
