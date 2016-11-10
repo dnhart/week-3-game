@@ -2,6 +2,7 @@
 <html lang="en-us">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Hangman</title>
 
   <!-- Bootstrap Core CSS -->
@@ -40,52 +41,54 @@
      <div class="alert alert-warning" role="alert">Please enter a word between 4 and 10 letters.</div>-->
 
 <!-- Divs currently hidden by default-->
+  <div class="row" id="gameblocks">
+  <!--Hangman Box -->
+    <div id="hangmanbox" class="col-sm-6 col-xs-12 panel panel-default">
+      <div id="hangmanimg" class="panel-body">
+        <img class="img-responsive" src="assets/images/hangman0.png"></img>
+      </div>
+      <div class="panel-footer">
+        <p id="countdown">Guesses Remain: 10</p>
+      </div> 
+    </div>
+
 
   <!-- Letter box for guessed letters-->
-  <div class="row">
-      <div id="letterbox" class="col-md-6 col-xs-12 panel panel-default">
-          <div class="panel-heading">
-            <h3 class="panel-title">Letters Guessed:</h3>
+    <div class="col-sm-6 col-xs-12 panel panel-default">
+        <div class="row">
+          <div id="letterbox" class="col-xs-12 panel panel-default">
+              <div class="panel-heading">
+                <h3 class="panel-title">Letters Guessed:</h3>
+              </div>
+              <div id="letters" class="panel-body">
+              </div>
           </div>
-          <div id="letters" class="panel-body">
-          </div>
-      </div>
-  <!--Hangman Box -->
-      <div id="hangmanbox" class="col-md-6 col-xs-12 panel panel-default">
-        <div id="hangmanimg" class="panel-body">
-          <img class="img-responsive" src="assets/images/hangman0.png"></img>
         </div>
-        <div class="panel-footer">
-          <p id="countdown">Guesses Remain: 10</p>
-        </div> 
-      </div>
-  </div>
   <!--scoreboard -->
+        <div class="row navbar-fixed-bottom" id="scoreboard">
+      <!--  <div class="row">-->
+          <div class="col-sm-6 col-xs-12 panel panel-default container-fluid">
+            <div class="panel-heading col-xs-12">
+              <h3 class="panel-title">Player 1</h3>
+            </div>
+            <div class="panel-body" id="player1total">
+              <h3>0</h3>
+            </div>
+          </div>
 
-    <div class="row" id="scoreboard">
-    <!--  <div class="row">-->
-        <div class="col-sm-6 col-sm-12 panel panel-default">
-          <div class="panel-heading col-xs-12">
-            <h3 class="panel-title">Player 1</h3>
+          <div class="col-sm-6 col-xs-12 panel panel-default container-fluid">
+            <div class="panel-heading col-xs-12">
+              <h3 class="panel-title">Player 2</h3>
+            </div>
+            <div class="panel-body" id="player2total">
+              <h3>0</h3>
+            </div>
           </div>
-          <div class="panel-body" id="player1total">
-            <h3>0</h3>
-          </div>
-        </div>
-
-        <div class="col-sm-6 col-sm-12 panel panel-default">
-          <div class="panel-heading col-xs-12">
-            <h3 class="panel-title">Player 2</h3>
-          </div>
-          <div class="panel-body" id="player2total">
-            <h3>0</h3>
-          </div>
-        </div>
       <!--</div>end row-->
-    </div> <!--End Scoreboard-->
-
+        </div> <!--End Scoreboard-->
+    </div>
 <!-- End hidden DIVS-->
-
+  </div>
 <audio id="audio" src="assets/sound/wrong.wav" ></audio>
 
 

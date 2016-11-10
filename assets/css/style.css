@@ -108,6 +108,7 @@ button {
   width: 100%;
   margin: auto;
   position: relative;
+  margin-top: 1px;
 }
 #hangmanimg img {
   position: relative;
@@ -117,7 +118,6 @@ button {
 #letterbox {
   float: left;
   height: 100%;
-
   display: none;
   overflow: auto;
   font-size: 1.5em;
@@ -130,6 +130,13 @@ button {
 #letters {
   font-size: 1.5em;
   color: #96100f;
+  height: 6em;
+}
+
+@media screen and (max-width: 991px) {
+    #letters {
+      height: 3.35em;
+    }
 }
 
 .marginCorrect {
@@ -144,8 +151,8 @@ button {
   float: left;
 }
 
-#scoreboard {
-
+#scoreboard, #gameblocks
+{
   display: none;
 }
 

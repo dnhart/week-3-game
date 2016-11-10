@@ -39,6 +39,8 @@ function getWord() {
               wordCheck.push("0");
             };
   //display game interface
+
+    document.getElementById("gameblocks").style.display = "block"; 
     document.getElementById("hangmanbox").style.display = "block"; 
     document.getElementById("letterbox").style.display = "block";
     document.getElementById("scoreboard").style.display = "block";  
