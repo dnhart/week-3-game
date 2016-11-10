@@ -27,9 +27,9 @@ function getWord() {
 
     //Sets up game----code that replaces the original user word input with the other player's guess input
     if (player === "Player 1"){
-        document.querySelector("#enterword").innerHTML = ('<div class="panel-heading"><h2 class="panel-title">Player 2, choose a letter to guess the word</h2></div> <div class="row panel-body"> <div class="col-sm-3"><input id="playerGuess" class="input" placeholder="?" name="playerGuess" type="text" value="" maxlength="1" /><br /><button  onclick="guessLetter()">Guess!</button></div><div id="wordbox" class="col-sm-6 col-sm-offset-2"></div></div>'); 
+        document.querySelector("#enterword").innerHTML = ('<div class="panel-heading"><h2 class="panel-title">Player 2, choose a letter to guess the word</h2></div> <div class="row panel-body"> <div class="col-sm-3" id="playerinterface"><input id="playerGuess" class="input" placeholder="?" name="playerGuess" type="text" value="" maxlength="1" /><br /><button  onclick="guessLetter()">Guess!</button></div><div id="wordbox" class="col-sm-6 col-sm-offset-2"></div></div>'); 
     } else {
-        document.querySelector("#enterword").innerHTML = ('<div class="panel-heading"><h2 class="panel-title">Player 1, choose a letter to guess the word</h2></div> <div class="row panel-body"> <div class="col-sm-3"><input id="playerGuess" class="input" placeholder="?" name="playerGuess" type="text" value="" maxlength="1" /><br /><button  onclick="guessLetter()">Guess!</button></div><div id="wordbox" class="col-sm-6 col-sm-offset-2"></div></div>'); 
+        document.querySelector("#enterword").innerHTML = ('<div class="panel-heading"><h2 class="panel-title">Player 1, choose a letter to guess the word</h2></div> <div class="row panel-body"> <div class="col-sm-3" id="playerinterface"><input id="playerGuess" class="input" placeholder="?" name="playerGuess" type="text" value="" maxlength="1" /><br /><button  onclick="guessLetter()">Guess!</button></div><div id="wordbox" class="col-sm-6 col-sm-offset-2"></div></div>'); 
     };
 
     //assigns ID's to each h4 and puts the correct number of blanks into the html for guessing
@@ -67,8 +67,6 @@ function guessLetter() {
     //check to see if the letter is in the word
     //isInWord();
 
-    //function wordSolved to see if the word is solved and if anyone won and to switch players
-    wordSolved(); 
   }; 
 };
 
@@ -98,6 +96,11 @@ function isInWord() {
   if (word.indexOf(guess) > -1 )  { 
         //if letter is in the word, enter the letter into the word array and html 
           enterLetters(); 
+
+         //function wordSolved to see if the word is solved and if anyone won and to switch players
+            wordSolved(); 
+
+
       } else {
         //the letter is not in the word
           document.getElementById('audio').play();
@@ -135,15 +138,17 @@ function hangTheMan (){
   guessRemain = 10-missedletters;
   if (missedletters < 10) {
     //update the hangman
-    document.querySelector("#hangmanimg").innerHTML += ('<img  src="assets/images/hangman'+missedletters+'.png" style="position:absolute; top:0; left:0; z-index:'+missedletters+'"></img>')
+    document.querySelector("#hangmanimg").innerHTML += ('<img class="img-responsive"  src="assets/images/hangman'+missedletters+'.png" style="position:absolute; top:0; left:0; z-index:'+missedletters+'"></img>')
     document.querySelector("#countdown").innerHTML = ('Guesses Remain: '+guessRemain);
+    document.getElementById("playerGuess").value = "";
   } else {
     //display word and button to switch players
-    document.querySelector("#hangmanimg").innerHTML = ('<img src="assets/images/hangman'+missedletters+'.png"></img>');
-    document.querySelector("#countdown").innerHTML = ('<input type="button" class="btn btn-default btn-sm" id="buttonlost" value="You Lost! The word was: '+word+'. (Click to continue.)" onClick="playerSwitch()"></input>');
+    document.querySelector("#hangmanimg").innerHTML = ('<img class="img-responsive" src="assets/images/hangman'+missedletters+'.png"></img>');
+    document.querySelector("#playerinterface").innerHTML = ('<input type="button" class="btn btn-default btn-sm" id="buttonlost" value="You Lost! The word was: '+word+'. (Click to continue.)" onClick="playerSwitch()"></input>');
   
   };
   writeLetterboxIncorrect();
+
 };
 
 //Write letters to the letterbox with the "Wrong letter" format
@@ -160,10 +165,10 @@ function wordSolved(){
   if ( wordCheck.indexOf("0") > -1 )  { 
     document.getElementById("playerGuess").value = "";
   } else {
-    document.getElementById("playerGuess").value = "";
+    //document.getElementById("playerGuess").value = "";
 
     //update score and switch player
-    document.querySelector("#countdown").innerHTML = ('<input type="button" class="btn btn-default btn-sm" id="buttonlost" value="You guessed the Word! (Click to Continue)" onClick="updateScore();"></input>');
+    document.querySelector("#playerinterface").innerHTML = ('<input type="button" class="btn btn-default btn-sm" id="buttonlost" value="You guessed the Word! (Click to Continue)" onClick="updateScore();"></input>');
    
   };
 
@@ -171,6 +176,7 @@ console.log(wordCheck);
 };
     
 function updateScore() {
+
   if (player === "Player 1") {
       //If player 2 guessed the word, update Player 2 score
       player2score = player2score + 1;
@@ -190,24 +196,25 @@ function updateScore() {
 
       //update Player 1 scoreboard
         document.querySelector("#player1total").innerHTML = ('<h3>'+ player1score+'</h3>');
-      };
 
   //check to see if one player has reached 5, but only after complete rounds
   if (player1score > 4 && player1score > player2score) {
       //Player 1 wins
-          document.querySelector("#countdown").innerHTML = ('<input type="button" class="btn btn-default btn-sm" id="buttonlost" value="Player 1 wins!!!!!" onClick="window.location.reload()"></input>');
+          document.querySelector("#playerinterface").innerHTML = ('<input type="button" class="btn btn-default btn-md" id="buttonlost" value="Player 1 wins!!!!!" onClick="window.location.reload()"></input>');
           newGame.classList.add("buttonnewgame");
       } else if (player2score > 4 && player2score > player1score) {
         //Player 2 wins
-          document.querySelector("#countdown").innerHTML = ('<input type="button" class="btn btn-default btn-sm" id="buttonlost" value="Player 2 wins!!!!!" onClick="window.location.reload()"></input>')
+          document.querySelector("#playerinterface").innerHTML = ('<input type="button" class="btn btn-default btn-md" id="buttonlost" value="Player 2 wins!!!!!" onClick="window.location.reload()"></input>')
           newGame.classList.add("buttonnewgame");
       } else if (player1score > 4 && player1score === player2score) {
         //Tie score
           alert('Play another round to break the tie!');
       };
+    };
 };
 
-
+//<input id="playerGuess" class="input" placeholder="?" name="playerGuess" type="text" value="" maxlength="1" /><br /><button  onclick="guessLetter()">Guess!</button></div>
+//<input type="button" class="btn btn-default btn-sm" id="buttonlost" value="You Lost! The word was: '+word+'. (Click to continue.)" onClick="playerSwitch()"></input>
 //**************************************************************************
 function playerSwitch() {
 
@@ -230,7 +237,7 @@ function playerSwitch() {
 
 function player1to2() {
   //update the word prompt
-   document.querySelector("#enterword").innerHTML = ('<h2>Player 2, enter a word (between 4-10 letter):</h2> <input id="playerWord" class="input" placeholder="word" name="playerWord" type="text" value="" size="10" /><br /> <button onclick="getWord()">BEGIN!</button>');
+   document.querySelector("#enterword").innerHTML = ('<div class="panel-heading"><h2 class="panel-title">Player 2, enter a word (between 4-10 letter):</h2></div><div class="panel-body" id="playerinterface"><input id="playerWord" class="input" placeholder="word" name="playerWord" type="text" value="" size="10" /><br /> <button onclick="getWord()">BEGIN!</button>');
   //change player from player 1 to player 2
       player = "Player 2";
       wordCheck = [];
@@ -242,7 +249,7 @@ function player1to2() {
 
  function player2to1() {
   //update the word prompt
-      document.querySelector("#enterword").innerHTML = ('<h2>Player 1, enter a word (between 4-10 letter):</h2> <input id="playerWord" class="input" placeholder="word" name="playerWord" type="text" value="" size="10" /><br /> <button onclick="getWord()">BEGIN!</button>');
+      document.querySelector("#enterword").innerHTML = ('<div class="panel-heading"><h2 class="panel-title">Player 1, enter a word (between 4-10 letter):</h2></div><div class="panel-body" id="playerinterface"><input id="playerWord" class="input" placeholder="word" name="playerWord" type="text" value="" size="10" /><br /> <button onclick="getWord()">BEGIN!</button>');
 
   //change player from player 2 to player 1
         player = "Player 1";
